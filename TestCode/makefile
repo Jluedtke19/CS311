@@ -12,4 +12,4 @@ length.o: length.c
 	gcc length.c -c
 
 clean:
-	rm -i *.c~ *.o
+	rm -i *.c~ *.o truncate
