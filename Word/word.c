@@ -13,9 +13,11 @@ char wordlist[500000][50];
 
 int hashnum(char *name){
   int returnval = 0;
+  //minus 96 becuase a starts at 1
   for(int i = 0; i < strlen(name); i ++){
     returnval += ((int)name[i] - 96);
   }
+  //negative values for non letters
   if(returnval < 0){
     return (returnval * -1);
   }
@@ -27,6 +29,7 @@ int hashnum(char *name){
 struct node * createNode( char *name) {
     struct node *newnode;
     newnode = (struct node *) malloc(sizeof(struct node));
+    //Set node name
     strcpy(newnode->name, name);
     newnode->next = NULL;
     newnode->count = 1;
@@ -43,10 +46,12 @@ void insertToHash(char *name) {
     if (!hashTable[hashIndex].head) {
       //printf("%s\n", "Help" );
         hashTable[hashIndex].head = newnode;
+        //shows something is in it
         hashTable[hashIndex].count = 1;
         return;
     }
     iteraten = hashTable[hashIndex].head;
+    //keep going till null
     while(iteraten != NULL){
       if(!strcmp((iteraten->name), name)){
         //printf("%s\n", "Help" );
@@ -58,16 +63,16 @@ void insertToHash(char *name) {
         continue;
       }
     }
-    /* adding new node to the list */
+    //if it isn't the head or a repeat word
     newnode->next = (hashTable[hashIndex].head);
     hashTable[hashIndex].head = newnode;
-    //hashTable[hashIndex].count++;
     return;
 }
 
 
 void display() {
     struct node *myNode;
+    //go through the hash array
     for (int i = 0; i < size; i++) {
         myNode = hashTable[i].head;
         while (myNode != NULL) {
