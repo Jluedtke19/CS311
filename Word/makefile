@@ -9,4 +9,4 @@ lettercount.o: lettercount.c
 
 
 clean:
-	rm -i *.c~ *.o
+	rm -i *.c~ *.o word
