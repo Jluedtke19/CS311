@@ -5,10 +5,10 @@
 
 #include "word.h"
 struct hash *hashTable = NULL;
-int size = 2000;
+int size = 10000;
 int a = 0;
 char *ptr;
-char wordlist[60000][20];
+char wordlist[500000][50];
 
 
 int hashnum(char *name){
@@ -68,8 +68,7 @@ void insertToHash(char *name) {
 
 void display() {
     struct node *myNode;
-    int i;
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         if (hashTable[i].count == 0)
             continue;
         myNode = hashTable[i].head;
@@ -98,10 +97,6 @@ void wordcount(ssize_t read, size_t len, FILE * inputstream, char *line, int *le
       }//if
       //printf("> %s\n", line);
     }//while
-    for(int c = 0; c < a; c++) {
-      //printf("%s\n", wordlist[c]);
-    }
-    //printf("%s\n", "help" );
   }
 
 int main(int argc, char** agrv){
@@ -111,7 +106,7 @@ int main(int argc, char** agrv){
   int letterz[26] = {0};
   int *p;
 
-  FILE * inputstream = fopen( "beemovie.txt", "r");
+  FILE * inputstream = fopen( "odyssey.txt", "r");
 
   if( inputstream == NULL){
     printf("No file\n");
@@ -121,7 +116,7 @@ int main(int argc, char** agrv){
 
 
   wordcount(read, len, inputstream, line, letterz);
-  hashTable = (struct hash *) calloc(60000, sizeof(struct hash));
+  hashTable = (struct hash *) calloc(a, sizeof(struct hash));
   for(int k = 0; k < a; k++ ){
     //printf("%s\n", wordlist[k] );
     insertToHash(wordlist[k]);
