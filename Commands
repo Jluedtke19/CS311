@@ -1,0 +1,30 @@
+ssh *                               *
+scp jluedtke19@cs1.cornellcollege.edu:rng.c .
+
+scp queue.c jluedtke19@cs1.cornellcollege.edu:311
+
+
+cp ../leon/courses/cs311/file .
+
+
+hg init
+
+hg status
+
+hg commit -m "Something"
+
+
+hg clone ssh://jluedtke19@cs1.cornellcollege.edu/filename
+
+mkdir example
+
+ 
+
+
+git status
+git add .
+git commit -m "First Commit"
+git remote add origin https://github.com/Jluedtke19/CS311.git
+git push -u origin master
+
+git clone https://github.com/Jluedtke19/CS311

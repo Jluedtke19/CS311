@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <string.h>
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+
+#define maxlength 40
+#define pagesize 4096
+
+int main(int argc, char** argv) {
+

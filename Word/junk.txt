@@ -1,0 +1,180 @@
+struct hashitem {
+   int count;
+   char *name;
+   struct hashitem *list;
+
+};
+
+//struct DataItem* hashArray[SIZE];
+//struct DataItem* dummyItem;
+//struct DataItem* item;
+
+int hash(char *word){
+  int returnval = 0;
+  for(int i = 0; i < strlen(word); i ++){
+    returnval += ((int)word[i] - 97);
+  }
+  return returnval % SIZE;
+}
+
+//int sizearray(struct hashitem *hasharray[]){
+//  return (sizeof(hasharray)/(sizeof(hasharray[0])))
+
+//}
+
+/*
+struct hashitem *search(char *word, struct hashitem *hasharray[]) {
+   //get the hash
+   int index = hash(word);
+   if(hasharray[index]->list[0] == NULL){
+     return hasharray[index];
+   }
+   else{
+     return 0;
+   }
+
+
+
+   return NULL;
+}
+*/
+void insert(char *word) {
+  int index = hash(word);
+  struct hashitem *temp = (struct hashitem*) malloc(sizeof(struct hashitem));
+  temp->count = 1;
+  temp->name = word;
+  temp->list = NULL;
+  if(hasharray[index] == 0){
+    hasharray[index] == temp;
+  }
+  else if(hasharray[index]->name == NULL) {
+    printf("%s\n", "Dog");
+  }
+
+
+}
+
+void display() {
+
+}
+
+} // main( int, char** )
+
+
+
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "word.h"
+struct hash *hashTable = NULL;
+//struct node *nodeTable = NULL;
+int size = 2000;
+
+struct node {
+    char name[100];
+    //struct node *next;
+    int count;
+
+};
+
+struct hash {
+    //struct node *head;
+    struct node nodes[15];
+    int count;
+};
+
+int hashnum(char *name){
+  int returnval = 0;
+  for(int i = 0; i < strlen(name); i ++){
+    returnval += ((int)name[i] - 96);
+  }
+  return returnval % size;
+}
+
+struct node * createNode( char *name) {
+    struct node *newnode;
+    strcpy(newnode->name, name);
+    newnode->next = NULL;
+    newnode->count = 1;
+    return newnode;
+}
+
+void insertToHash(char *name) {
+    int hashIndex = hashnum(name);
+    struct node *newnode = createNode(name);
+    struct node *iteraten = createNode(name);
+    /* head of list for the bucket with index "hashIndex" */
+    //if it is the head or not
+    if (!hashTable[hashIndex].nodes[0]) {
+        hashTable[hashIndex].nodes[0] = newnode;
+        //hashTable[hashIndex].count = 1;
+        return;
+    }
+
+    iteraten = hashTable[hashIndex].nodes[0];
+    while(iteraten != NULL){
+      if(!strcmp((iteraten->name), name)){
+        iteraten->count += 1;
+        return;
+      }
+      else{
+        iteraten = iteraten->next;
+        continue;
+      }
+
+    }
+    /* adding new node to the list */
+    newnode->next = (hashTable[hashIndex].nodes[0]);
+    /*
+     * update the head of the list and no of
+     * nodes in the current bucket
+     */
+    hashTable[hashIndex].nodes[0] = newnode;
+    hashTable[hashIndex].count++;
+    return;
+}
+
+void searchInHash(char *name) {
+    int hashIndex = hashnum(name), flag = 0;
+    struct node *myNode;
+    myNode = hashTable[hashIndex].nodes[0];
+    if (!myNode) {
+        printf("Search element unavailable in hash table\n");
+        return;
+    }
+    while (myNode != NULL) {
+        if (myNode->name == name) {
+            printf("Name     : %s\n", myNode->name);
+            flag = 1;
+            break;
+        }
+        myNode = myNode->next;
+    }
+    if (!flag)
+        printf("Search element unavailable in hash table\n");
+    return;
+}
+
+void display() {
+    struct node *myNode;
+    int i;
+    for (i = 0; i < size; i++) {
+        if (hashTable[i].count == 0)
+            continue;
+        myNode = hashTable[i].nodes[0];
+        if (!myNode)
+            continue;
+        printf("\nData at index %d in Hash Table:\n", i);
+        printf("VoterID     Name          Age   \n");
+        printf("--------------------------------\n");
+        while (myNode != NULL) {
+            printf("%-15s", myNode->name);
+            myNode = myNode->next;
+        }
+    }
+    return;
+}
