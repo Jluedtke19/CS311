@@ -69,11 +69,7 @@ void insertToHash(char *name) {
 void display() {
     struct node *myNode;
     for (int i = 0; i < size; i++) {
-        if (hashTable[i].count == 0)
-            continue;
         myNode = hashTable[i].head;
-        if (!myNode)
-            continue;
         while (myNode != NULL) {
             printf("%-15s", myNode->name);
             printf("%d\n", myNode->count );
