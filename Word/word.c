@@ -83,7 +83,9 @@ void display() {
             myNode = myNode->next;
         }
     }
+    printf("\n" );
     printf("Number of unique words : %d\n", uniquew );
+
     return;
 }
 
@@ -92,9 +94,8 @@ void search(char *word, int size){
   int hash = hashnum(word);
   rnode = hashTable[hash].head;
   //printf("%d\n", rnode->count );
-
-  if(rnode->count == 0){
-    printf("%s\n", "Word does not exit");
+  if(rnode == NULL){
+    printf("%s\n", "Word doens't exist" );
   }
 
   while(rnode != NULL){
@@ -110,26 +111,28 @@ void search(char *word, int size){
     }
   }
 
-  printf("%s\n", "Word is not in here" );
+  printf("%s %s \n", word, "does not exist" );
 }
 
 
 void wordcount(ssize_t read, size_t len, FILE * inputstream, char *line, int *letterz){
   while ((read = getline(&line, &len, inputstream)) != -1){
     if( read > 0 ){
-      for(int k = 0; line[k]; k++){
-        if(line[k] >= '0' <= 9 ){
-          //printf("%s\n", "help" );
-          //line[k] = ' ';
+      for(int k = 0; k  < strlen(line); k++){
+        if(line[k] >= '0' && line[k] <= '9' ){
+          line[k] = ' ';
+        }
+        else if(line[k] == '\''){
+          line[k] = '\0';
         }
         line[k] = tolower(line[k]);
       }
 
-      ptr = strtok(line, ".;!?-,/\n\" ");
+      ptr = strtok(line, ".;:()[]!?-,/\n\" ");
       while( ptr != NULL){
         strncpy(wordlist[a], ptr, strlen(ptr));
         a++;
-        ptr = strtok(NULL, ".;!?-,/\n\" ");
+        ptr = strtok(NULL, ".()[];:!?-,/\n\" ");
         }//while
       }//if
       //printf("> %s\n", line);
@@ -158,11 +161,18 @@ int main(int argc, char** agrv){
   }
 
   display();
+
   //search("supercalfredge");
+  printf("Total number of words: %d\n", a);
+  printf("\n" );
   search("the", a);
+  search("uyles",a);
+  search("ulysses",a);
+  search("dab",a);
+  search("a",a);
   //printf("%d\n", testnum);
   //printf("%s\n", "Yes");
-  printf("Total number of words: %d\n", a);
+
   fclose( inputstream );
   free( line );
   //printf("%s\n", "Help" );
