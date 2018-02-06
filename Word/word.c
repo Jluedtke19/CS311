@@ -72,23 +72,59 @@ void insertToHash(char *name) {
 
 void display() {
     struct node *myNode;
+    int uniquew = 0;
     //go through the hash array
     for (int i = 0; i < size; i++) {
         myNode = hashTable[i].head;
         while (myNode != NULL) {
+            uniquew += 1;
             printf("%-15s", myNode->name);
             printf("%d\n", myNode->count );
             myNode = myNode->next;
         }
     }
+    printf("Number of unique words : %d\n", uniquew );
     return;
 }
+
+void search(char *word, int size){
+  struct node *rnode;
+  int hash = hashnum(word);
+  rnode = hashTable[hash].head;
+  //printf("%d\n", rnode->count );
+
+  if(rnode->count == 0){
+    printf("%s\n", "Word does not exit");
+  }
+
+  while(rnode != NULL){
+    if(!strcmp((rnode->name), word)){
+      printf("Name : %s\t", rnode->name );
+      printf("Count : %d\t", rnode->count);
+      printf("Average : %f\n", ((double)rnode->count/(double)size));
+      return;
+    }
+    else{
+      rnode = rnode->next;
+      continue;
+    }
+  }
+
+  printf("%s\n", "Word is not in here" );
+}
+
+
 void wordcount(ssize_t read, size_t len, FILE * inputstream, char *line, int *letterz){
   while ((read = getline(&line, &len, inputstream)) != -1){
     if( read > 0 ){
       for(int k = 0; line[k]; k++){
+        if(line[k] >= '0' <= 9 ){
+          //printf("%s\n", "help" );
+          //line[k] = ' ';
+        }
         line[k] = tolower(line[k]);
       }
+
       ptr = strtok(line, ".;!?-,/\n\" ");
       while( ptr != NULL){
         strncpy(wordlist[a], ptr, strlen(ptr));
@@ -114,36 +150,25 @@ int main(int argc, char** agrv){
     return 1;
   }//if
 
-
-
   wordcount(read, len, inputstream, line, letterz);
   hashTable = (struct hash *) calloc(a, sizeof(struct hash));
   for(int k = 0; k < a; k++ ){
     //printf("%s\n", wordlist[k] );
     insertToHash(wordlist[k]);
   }
-  display();
-  /*
-  char *cat = "cat";
-  char *hat = "hat";
-  char *c ="c";
-  char *ab = "ab";
 
-  insertToHash(cat);
-  insertToHash(cat);
-  insertToHash(hat);
-  insertToHash(c);
-  insertToHash(ab);
   display();
-  */
+  //search("supercalfredge");
+  search("the", a);
+  //printf("%d\n", testnum);
+  //printf("%s\n", "Yes");
+  printf("Total number of words: %d\n", a);
   fclose( inputstream );
   free( line );
   //printf("%s\n", "Help" );
   for(int i = 0; i <26; i++){
     //printf("%c = %d\n", 'a' + i, p[i]);
   }
-
-
 
   return -1;
 

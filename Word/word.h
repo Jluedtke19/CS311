@@ -11,6 +11,8 @@ void insertToHash(char *name);
 void searchInHash(char *name);
 void display();
 int hashnum(char *name);
+void search(char *word, int size);
+;
 struct node {
     char name[100];
     struct node *next;
